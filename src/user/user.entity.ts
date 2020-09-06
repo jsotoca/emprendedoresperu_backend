@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
-import { Exclude } from 'class-transformer';
+import { Exclude, classToPlain } from 'class-transformer';
 import { UserRoles } from './user.roles';
 
 @Entity('user')
@@ -13,7 +13,7 @@ export default class User extends BaseEntity {
     @Column({nullable:false})
     phone:string;
 
-    @Column({nullable:false})
+    @Column({nullable:false,unique:true})
     email:string;
 
     @Column({nullable:false})
@@ -34,4 +34,8 @@ export default class User extends BaseEntity {
 
     @CreateDateColumn({type:'timestamp',default:()=>'CURRENT_TIMESTAMP(6)',onUpdate:'CURRENT_TIMESTAMP(6)'})
     updated_at:Date;
+
+    toJSON(){
+        return classToPlain(this);
+    }
 }
