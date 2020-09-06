@@ -50,7 +50,7 @@ export default class User extends BaseEntity {
         }
     }
 
-    comparePassword(password:string){
+    comparePasswords(password:string){
         return compareSync(password,this.password);
     }
 }

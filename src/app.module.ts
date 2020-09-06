@@ -4,12 +4,14 @@ import { configuration } from './configuration/configuration.keys';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { ServicesModule } from './services/services.module';
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal:true}),
     DatabaseModule,
     UserModule,
-    AuthModule
+    AuthModule,
+    ServicesModule
   ]
 })
 export class AppModule {
