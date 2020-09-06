@@ -1,4 +1,5 @@
 export enum configuration {
     APPLICATION_NAME='APPLICATION_NAME',
-    PORT='PORT'
+    PORT='PORT',
+    DATABASE_URI='DATABASE_URI'
 }
