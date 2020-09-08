@@ -1,12 +1,17 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, BeforeInsert, BeforeUpdate } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, BeforeInsert, BeforeUpdate, OneToMany } from "typeorm";
 import { Exclude, classToPlain } from 'class-transformer';
 import { UserRoles } from './user.roles';
 import { genSaltSync, hashSync, compareSync } from 'bcrypt';
+import Entrepreneurship from "../entrepreneurship/entrepreneurship.entity";
 
 @Entity('user')
 export default class User extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id:string;
+
+    @OneToMany(type=>Entrepreneurship,entrepreneurship=>entrepreneurship.user,{eager:true})
+    @Exclude({toPlainOnly:true})
+    entrepreneurships:Entrepreneurship[];
 
     @Column({nullable:false})
     fullname:string;
