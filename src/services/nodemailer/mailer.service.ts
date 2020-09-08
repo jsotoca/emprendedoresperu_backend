@@ -14,13 +14,13 @@ export default class NodemailerService {
     sendMailRegister(user:User){
         const resp = this.mailerService.sendMail({
             to: user.email,
-            from: '"Emprendedores Perú No-Responder" <no-reply@sipandigital.com>',
+            from: '"Emprendedores Perú No-Responder" <noresponder@sipandigital.com>',
             subject: '¡🚀Bienvenido a la comunidad de "Emprendedores Perú" 🚀!',
             template: 'register',
             context: {
                 user:user.fullname
             },
-        }).then(()=>{console.log('email enviando')}).catch(()=>{console.log('email enviando')});
+        }).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)});
     }
 
     sendMailResetPassword(names:string,email:string,token:string){
@@ -28,13 +28,13 @@ export default class NodemailerService {
         const url = `${env_url}/auth/resetpassword/${email}/${token}`;
         this.mailerService.sendMail({
             to: email,
-            from: '"Emprendedores Perú No-Responder" <no-reply@sipandigital.com>',
+            from: '"Emprendedores Perú No-Responder" <noresponder@sipandigital.com>',
             subject: 'Resetear Contraseña en "Emprendedores Perú" 🚀',
             template: 'resetpassword',
             context: {
                 names,
                 url
             },
-        }).then(()=>{console.log('email enviando')}).catch(()=>{console.log('email enviando')});
+        }).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)});
     }
 }

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Body, ValidationPipe, Param } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import SignUpDTO from '../user/dto/signup.dto';
 import AuthCrendentialsDTO from '../user/dto/auth.dto';
@@ -22,6 +22,22 @@ export class AuthController {
         @Body(ValidationPipe) authCrendentialsDTO:AuthCrendentialsDTO
     ){
         return await this.authService.signIn(authCrendentialsDTO);
+    }
+
+    @Post('/forgotpassword')
+    async forgortPassword(
+        @Body('email') email:string
+    ){
+        return await this.authService.forgotPassword(email);
+    }
+
+    @Post('/resetpassword/:email/:token')
+    async resetPassword(
+        @Body('password') password:string,
+        @Param('email') email:string,
+        @Param('token') token:string,
+    ){
+        return await this.authService.resetPassword(password,email,token);
     }
 
 }

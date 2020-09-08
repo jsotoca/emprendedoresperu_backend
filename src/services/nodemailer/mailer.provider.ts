@@ -7,9 +7,11 @@ export  const MailerProvider =  MailerModule.forRootAsync({
     imports:[ConfigModule],
     inject:[ConfigService],
     useFactory: async(config:ConfigService)=>({
-        transport:config.get<string>(configuration.SMTP_TRANSPORT),
+        transport: config.get<string>(configuration.SMTP_TRANSPORT),
+        requireTLS: true,
+        secure:true,
         defaults:{
-            from:'"Emprendedores Perú No-Responder" <no-reply@sipandigital.com>'
+            from:'"Emprendedores Perú No-Responder" <noresponder@sipandigital.com>'
         },
         template: {
           dir: './templates/email',

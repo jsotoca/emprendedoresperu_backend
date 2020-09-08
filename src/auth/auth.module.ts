@@ -3,13 +3,13 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserModule } from './../user/user.module';
 import { JwtProvider } from './jwt/jwt.provider';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import UserRepository from 'src/user/user.repository';
+import { ServicesModule } from './../services/services.module';
 
 @Module({
   imports:[
     UserModule,
-    JwtProvider
+    JwtProvider,
+    ServicesModule
   ],
   controllers: [AuthController],
   providers: [AuthService]
