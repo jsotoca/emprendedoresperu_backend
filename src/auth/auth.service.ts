@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Connection } from 'typeorm';
-import UserRepository from '../user/user.repository';
-import User from '../user/user.entity';
+import UserRepository from '../modules/user/user.repository';
+import User from '../modules/user/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt/jwt.payload';
-import AuthCrendentialsDTO from '../user/dto/auth.dto';
-import SignUpDTO from '../user/dto/signup.dto';
+import AuthCrendentialsDTO from '../modules/user/dto/auth.dto';
+import SignUpDTO from '../modules/user/dto/signup.dto';
 import NodemailerService from '../services/nodemailer/mailer.service';
 import { sign,verify } from 'jsonwebtoken';
 

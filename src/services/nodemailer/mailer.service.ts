@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
-import User from './../../user/user.entity';
+import User from './../../modules/user/user.entity';
 import { configuration } from './../../configuration/configuration.keys';
 
 @Injectable()

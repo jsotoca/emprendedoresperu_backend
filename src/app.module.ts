@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule,ConfigService } from '@nestjs/config';
 import { configuration } from './configuration/configuration.keys';
 import { DatabaseModule } from './database/database.module';
-import { UserModule } from './user/user.module';
+import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ServicesModule } from './services/services.module';
-import { EntrepreneurshipModule } from './entrepreneurship/entrepreneurship.module';
+import { EntrepreneurshipModule } from './modules/entrepreneurship/entrepreneurship.module';
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal:true}),

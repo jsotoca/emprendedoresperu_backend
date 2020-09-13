@@ -1,6 +1,6 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, RelationId, JoinColumn } from "typeorm";
 import { classToPlain, Exclude } from "class-transformer";
-import User from "../user/user.entity";
+import User from "../../modules/user/user.entity";
 
 @Entity('entrepreneurship')
 export default class Entrepreneurship extends BaseEntity {
@@ -41,7 +41,7 @@ export default class Entrepreneurship extends BaseEntity {
     updated_at:Date;
 
     @ManyToOne(type=>User,user=>user.entrepreneurships,{eager:false})
-    @JoinColumn({ name: "user_id" })
+    @JoinColumn({ name: "user" })
     @Exclude({toPlainOnly:true})
     user:User;
 

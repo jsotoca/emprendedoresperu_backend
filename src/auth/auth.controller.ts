@@ -1,7 +1,8 @@
-import { Controller, Post, Body, ValidationPipe, Param } from '@nestjs/common';
+import { Controller, Post, Body, ValidationPipe, Param, Get, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import SignUpDTO from '../user/dto/signup.dto';
-import AuthCrendentialsDTO from '../user/dto/auth.dto';
+import SignUpDTO from '../modules/user/dto/signup.dto';
+import AuthCrendentialsDTO from '../modules/user/dto/auth.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -38,6 +39,12 @@ export class AuthController {
         @Param('token') token:string,
     ){
         return await this.authService.resetPassword(password,email,token);
+    }
+
+    @Get('/demo')
+    @UseGuards(AuthGuard('jwt'))
+    saludo(){
+        return {message:'hola mundo'}
     }
 
 }
