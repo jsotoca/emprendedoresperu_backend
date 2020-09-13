@@ -23,12 +23,12 @@ export default class Entrepreneurship extends BaseEntity {
     address:string;
 
     @Column({nullable:true})
-    coordinates:string;
+    location:string;
 
-    @Column({default:'no-logo.png'})
+    @Column({nullable:true, default:'no-logo.png'})
     logo:string;
 
-    @Column({default:'no-cover.png'})
+    @Column({nullable:true, default:'no-cover.png'})
     cover:string;
 
     @Column({nullable:false,default: ()=>true})
