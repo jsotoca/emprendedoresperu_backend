@@ -1,12 +1,12 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, RelationId, JoinColumn } from "typeorm";
 import { classToPlain, Exclude } from "class-transformer";
 import User from "../../modules/user/user.entity";
-import { Category } from "./enums/category.enum";
+import Category from "../category/category.entity";
 
 @Entity('entrepreneurship')
 export default class Entrepreneurship extends BaseEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id:string;
+    @PrimaryGeneratedColumn('increment')
+    id: number;
 
     @Column({nullable:false})
     name:string;
@@ -17,7 +17,9 @@ export default class Entrepreneurship extends BaseEntity {
     @Column({nullable:false})
     slogan:string;
 
-    @Column({nullable:false})
+    @ManyToOne(type=>Category,category=>category.entrepreneurships,{eager:false})
+    @JoinColumn({ name: "category" })
+    // @Exclude({toPlainOnly:true})
     category:Category;
     
     @Column({nullable:false})

@@ -6,8 +6,8 @@ import Entrepreneurship from "../entrepreneurship/entrepreneurship.entity";
 
 @Entity('user')
 export default class User extends BaseEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id:string;
+    @PrimaryGeneratedColumn('increment')
+    id: number;
 
     @OneToMany(type=>Entrepreneurship,entrepreneurship=>entrepreneurship.user,{eager:true})
     @Exclude({toPlainOnly:true})

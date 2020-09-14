@@ -19,7 +19,7 @@ export class EntrepreneurshipController {
         @Body() createEntrepreneurshipDTO:CreateEntrepreneurshipDTO,
         @GetUser() user:User
     ){
-        return await this.entrepreneurshipService.createEntrepreneurship(user,createEntrepreneurshipDTO);
+        return await this.entrepreneurshipService.createEntrepreneurship(createEntrepreneurshipDTO,user);
     }
 
     @Get('/')

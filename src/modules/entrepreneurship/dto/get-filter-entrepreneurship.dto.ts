@@ -1,6 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsEnum, IsOptional, IsNumber, IsString } from 'class-validator';
-import { Category } from '../enums/category.enum';
+import { IsOptional, IsNumber, IsInt } from 'class-validator';
 
 export default class GetFiltersEntrepreneurshipDTO {
 
@@ -15,8 +14,9 @@ export default class GetFiltersEntrepreneurshipDTO {
     limit:number;
     
     @IsOptional()
-    @IsEnum(Category)
-    category:Category
+    @Type(() => Number)
+    @IsInt()
+    category:number;
 
     @IsOptional()
     search:string;

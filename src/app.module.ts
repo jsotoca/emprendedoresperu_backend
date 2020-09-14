@@ -6,6 +6,7 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ServicesModule } from './services/services.module';
 import { EntrepreneurshipModule } from './modules/entrepreneurship/entrepreneurship.module';
+import { CategoryModule } from './modules/category/category.module';
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal:true}),
@@ -14,6 +15,7 @@ import { EntrepreneurshipModule } from './modules/entrepreneurship/entrepreneurs
     AuthModule,
     ServicesModule,
     EntrepreneurshipModule,
+    CategoryModule,
   ]
 })
 export class AppModule {

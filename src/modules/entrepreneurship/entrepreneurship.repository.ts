@@ -3,13 +3,19 @@ import Entrepreneurship from "./entrepreneurship.entity";
 import CreateEntrepreneurshipDTO from "./dto/create-entrepreneurship.dto";
 import User from "../user/user.entity";
 import GetFiltersEntrepreneurshipDTO from "./dto/get-filter-entrepreneurship.dto";
+import Category from "../category/category.entity";
 @EntityRepository(Entrepreneurship)
 export default class EntrepreneurshipRepository extends Repository<Entrepreneurship> {
-    
-    async createEntrepreneurship(user:User,createEntrepreneurshipDTO:CreateEntrepreneurshipDTO){
+
+    async createEntrepreneurship(
+        createEntrepreneurshipDTO:CreateEntrepreneurshipDTO,
+        user:User,
+        category:Category
+    ){
         const entrepreneurship = new Entrepreneurship();
         for(let field in createEntrepreneurshipDTO) entrepreneurship[field] = createEntrepreneurshipDTO[field];
         entrepreneurship.user = user;
+        entrepreneurship.category = category;
         try {
             await entrepreneurship.save();
             return entrepreneurship;

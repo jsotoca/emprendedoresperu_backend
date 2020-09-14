@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsString, MinLength, MaxLength, IsOptional, IsEnum } from 'class-validator';
-import { Category } from '../enums/category.enum';
+import { Type } from 'class-transformer';
+import { IsNotEmpty, IsString, MinLength, MaxLength, IsOptional, IsEnum, IsNumber, IsNumberString, IsInt } from 'class-validator';
 
 export default class CreateEntrepreneurshipDTO {
     @IsNotEmpty()
@@ -21,8 +21,9 @@ export default class CreateEntrepreneurshipDTO {
     slogan:string;
 
     @IsNotEmpty()
-    @IsEnum(Category)
-    category:Category
+    @Type(() => Number)
+    @IsInt()
+    category:number;
     
     @IsNotEmpty()
     @IsString()
