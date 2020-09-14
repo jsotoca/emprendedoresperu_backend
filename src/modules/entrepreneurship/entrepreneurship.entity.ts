@@ -1,6 +1,7 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, RelationId, JoinColumn } from "typeorm";
 import { classToPlain, Exclude } from "class-transformer";
 import User from "../../modules/user/user.entity";
+import { Category } from "./enums/category.enum";
 
 @Entity('entrepreneurship')
 export default class Entrepreneurship extends BaseEntity {
@@ -15,6 +16,9 @@ export default class Entrepreneurship extends BaseEntity {
 
     @Column({nullable:false})
     slogan:string;
+
+    @Column({nullable:false})
+    category:Category;
     
     @Column({nullable:false})
     phone:string;
@@ -30,6 +34,9 @@ export default class Entrepreneurship extends BaseEntity {
 
     @Column({nullable:true, default:'no-cover.png'})
     cover:string;
+
+    @Column({nullable:false,default: ()=>false})
+    isVerified:boolean;
 
     @Column({nullable:false,default: ()=>true})
     actived:boolean;

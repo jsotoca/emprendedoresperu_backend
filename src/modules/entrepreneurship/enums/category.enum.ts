@@ -1,0 +1,9 @@
+export enum Category {
+    SHOPPING = 'TIENDA',
+    ENTERTAINMENT = 'ENTRETENIMIENTO',
+    RESTAURANT = 'RESTAURANTE',
+    DRINK = 'BEBIDAS',
+    FITNESS = 'DEPORTE',
+    SPA = 'SPA',
+    HEALTHY = 'SALUD'
+}
