@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { EntrepreneurshipService } from './entrepreneurship.service';
 import CreateEntrepreneurshipDTO from './dto/create-entrepreneurship.dto';
@@ -28,5 +28,13 @@ export class EntrepreneurshipController {
         @Body() getFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO
     ){
         return await this.entrepreneurshipService.getEntrepreneurships(getFiltersEntrepreneurshipDTO);
+    }
+
+    @Get('/:id')
+    @UsePipes(ValidationPipe)
+    async getEntrepreneurship(
+        @Param('id') id:number
+    ){
+        return await this.entrepreneurshipService.getEntrepreneurship(id);
     }
 }

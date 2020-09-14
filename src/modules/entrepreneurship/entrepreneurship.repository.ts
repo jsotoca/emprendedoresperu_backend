@@ -28,7 +28,8 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
         let {page, limit, category, search} = GetFiltersEntrepreneurshipDTO;
         if(!page)page=1;if(!limit)limit=5;
         const skip = (page-1)*limit;
-        const query = this.createQueryBuilder()
+        const query = this.createQueryBuilder('entrepreneurship')
+                    .innerJoinAndSelect('entrepreneurship.category', 'category')
                     .orderBy('created_at','DESC')
                     .offset(skip)
                     .limit(limit);

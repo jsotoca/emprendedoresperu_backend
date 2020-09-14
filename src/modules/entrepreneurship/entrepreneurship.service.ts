@@ -29,4 +29,12 @@ export class EntrepreneurshipService {
     async getEntrepreneurships(getFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO,userId?:string){
         return this.entrepreneurshipRepository.getEntrepreneurships(getFiltersEntrepreneurshipDTO,userId);
     }
+
+    async getEntrepreneurship(id:number){
+        const entrepreneurship = await this.entrepreneurshipRepository.findOne(
+            id,
+            {relations:['category']}
+        );
+        return {ok:true,entrepreneurship};
+    }
 }
