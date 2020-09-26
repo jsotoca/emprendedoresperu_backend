@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import CategoryRepository from './category.repository';
 import CreateCategoryDTO from './dto/create-category.dto';
 import S3Service from '../../services/aws/s3.service';
+import GetFiltersCategoriesDTO from './dto/get-filter-category.dto';
 @Injectable()
 export class CategoryService {
     constructor(
@@ -23,6 +24,10 @@ export class CategoryService {
             }
         }
         return {ok:true,category};
+    }
+
+    async getCategories(getFiltersCategoriesDTO:GetFiltersCategoriesDTO){
+        return this.categoryRepository.getCategories(getFiltersCategoriesDTO);
     }
 
     async getCategory(id:number){
