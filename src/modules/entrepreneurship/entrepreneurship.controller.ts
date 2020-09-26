@@ -6,6 +6,8 @@ import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import User from '../user/user.entity';
 import GetFiltersEntrepreneurshipDTO from './dto/get-filter-entrepreneurship.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { Roles } from './../../auth/decorators/roles.decorator';
+import { RolesGuard } from './../../auth/guards/roles.guard';
 
 @Controller('entrepreneurship')
 export class EntrepreneurshipController {
@@ -36,11 +38,19 @@ export class EntrepreneurshipController {
         return await this.entrepreneurshipService.getEntrepreneurships(getFiltersEntrepreneurshipDTO);
     }
 
-    @Get('/:id')
+    @Get('/search/:id')
     @UsePipes(ValidationPipe)
     async getEntrepreneurship(
         @Param('id') id:number
     ){
         return await this.entrepreneurshipService.getEntrepreneurship(id);
+    }
+
+    @Get('/test')
+    @UseGuards(AuthGuard('jwt'),RolesGuard)
+    @Roles(['ADMIN','MOD'])
+    testGuards(        
+    ){
+        return "hola mundo"; 
     }
 }

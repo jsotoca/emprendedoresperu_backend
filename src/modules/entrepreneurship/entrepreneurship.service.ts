@@ -29,11 +29,11 @@ export class EntrepreneurshipService {
         const entrepreneurship = await this.entrepreneurshipRepository.createEntrepreneurship(createEntrepreneurshipDTO,user,category);
         if(entrepreneurship && (logo || cover)){
             if(logo){
-                const { Location }= await this.S3.uploadImage(logo,'logo',user.id);
+                const { Location }= await this.S3.uploadImage(logo,`${user.id}/logo`);
                 entrepreneurship.logo = Location;
             }
             if(cover){
-                const { Location }= await this.S3.uploadImage(logo,'cover',user.id);
+                const { Location }= await this.S3.uploadImage(logo,`${user.id}/cover`);
                 entrepreneurship.cover = Location;
             }
             try {
