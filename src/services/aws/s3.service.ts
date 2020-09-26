@@ -23,9 +23,9 @@ export default class S3Service {
         });
     }
    
-    async uploadImage(file:any,album:string,userId:number){
+    async uploadImage(file:any,album:string){
         const name:string = uuidv4();
-        const url = `imagenes/${userId}/${album}/${name}`+extname(file.originalname);
+        const url = `imagenes/${album}/${name}`+extname(file.originalname);
         return await this.upload(file,url);
     }
 
