@@ -8,7 +8,10 @@ export default class Category extends BaseEntity {
     id: number;
 
     @Column({nullable:false})
-    description:string;
+    name:string;
+
+    @Column({nullable:false})
+    image:string;
 
     @OneToMany(type=>Entrepreneurship,entrepreneurship=>entrepreneurship.category,{eager:true})
     @Exclude({toPlainOnly:true})
