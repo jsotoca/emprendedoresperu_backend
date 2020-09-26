@@ -1,17 +1,21 @@
 import { Module } from '@nestjs/common';
+import S3Service from './aws/s3.service';
 import { MailerProvider } from './nodemailer/mailer.provider';
 import NodemailerService from './nodemailer/mailer.service';
 
 @Module({
     imports:[
-        MailerProvider
+        MailerProvider,
+        S3Service
     ],
     exports:[
         MailerProvider,
-        NodemailerService
+        NodemailerService,
+        S3Service
     ],
     providers:[
-        NodemailerService
+        NodemailerService,
+        S3Service
     ]
 })
 export class ServicesModule {}

@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UploadedFiles, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { EntrepreneurshipService } from './entrepreneurship.service';
 import CreateEntrepreneurshipDTO from './dto/create-entrepreneurship.dto';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import User from '../user/user.entity';
 import GetFiltersEntrepreneurshipDTO from './dto/get-filter-entrepreneurship.dto';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 
 @Controller('entrepreneurship')
 export class EntrepreneurshipController {
@@ -15,11 +16,16 @@ export class EntrepreneurshipController {
     @Post('/')
     @UseGuards(AuthGuard('jwt'))
     @UsePipes(ValidationPipe)
+    @UseInterceptors(FileFieldsInterceptor([
+        { name: 'logo', maxCount: 1 },
+        { name: 'cover', maxCount: 1 },
+    ]))
     async createEntrepreneurship(
         @Body() createEntrepreneurshipDTO:CreateEntrepreneurshipDTO,
-        @GetUser() user:User
+        @GetUser() user:User,
+        @UploadedFiles() files,
     ){
-        return await this.entrepreneurshipService.createEntrepreneurship(createEntrepreneurshipDTO,user);
+        return await this.entrepreneurshipService.createEntrepreneurship(createEntrepreneurshipDTO,user,files.logo[0],files.cover[0]);
     }
 
     @Get('/')
