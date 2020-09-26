@@ -51,4 +51,29 @@ export default class CreateEntrepreneurshipDTO {
     @MaxLength(225)
     cover:string;
 
+    @IsOptional()
+    @IsString()
+    @MaxLength(225)
+    facebook:string;
+
+    @IsOptional()
+    @IsString()
+    @MaxLength(225)
+    twitter:string;
+
+    @IsOptional()
+    @IsString()
+    @MaxLength(225)
+    youtube:string;
+
+    @IsOptional()
+    @IsString()
+    @MaxLength(225)
+    instagram:string;
+
+    @IsOptional()
+    @IsString()
+    @MaxLength(225)
+    tiktok:string;
+
 }

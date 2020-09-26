@@ -8,7 +8,7 @@ export default class Entrepreneurship extends BaseEntity {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @Column({nullable:false})
+    @Column({nullable:false,unique:true})
     name:string;
 
     @Column({nullable:false})
@@ -19,7 +19,6 @@ export default class Entrepreneurship extends BaseEntity {
 
     @ManyToOne(type=>Category,category=>category.entrepreneurships,{eager:false})
     @JoinColumn({ name: "category" })
-    // @Exclude({toPlainOnly:true})
     category:Category;
     
     @Column({nullable:false})
@@ -36,6 +35,21 @@ export default class Entrepreneurship extends BaseEntity {
 
     @Column({nullable:true, default:'no-cover.png'})
     cover:string;
+
+    @Column({nullable:true,unique:true})
+    facebook:string;
+
+    @Column({nullable:true,unique:true})
+    twitter:string;
+
+    @Column({nullable:true,unique:true})
+    youtube:string;
+
+    @Column({nullable:true,unique:true})
+    instagram:string;
+
+    @Column({nullable:true,unique:true})
+    tiktok:string;
 
     @Column({nullable:false,default: ()=>false})
     isVerified:boolean;
