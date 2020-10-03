@@ -1,3 +1,4 @@
+import { TagModule } from './../tag/tag.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { EntrepreneurshipController } from './entrepreneurship.controller';
@@ -12,6 +13,7 @@ import { ServicesModule } from './../../services/services.module';
     TypeOrmModule.forFeature([EntrepreneurshipRepository]),
     UserModule,
     SubcategoryModule,
+    TagModule,
     ServicesModule
   ],
   controllers: [EntrepreneurshipController],

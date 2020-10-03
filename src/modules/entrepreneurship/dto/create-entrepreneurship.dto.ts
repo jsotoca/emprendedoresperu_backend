@@ -24,6 +24,9 @@ export default class CreateEntrepreneurshipDTO {
     @Type(() => Number)
     @IsInt()
     subcategory:number;
+
+    @IsNotEmpty()
+    tags:number[];
     
     @IsNotEmpty()
     @IsString()

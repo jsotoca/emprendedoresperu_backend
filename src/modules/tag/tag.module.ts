@@ -11,6 +11,7 @@ import TagRepository from './tag.repository';
         ServicesModule
     ],
     controllers: [TagController],
-    providers: [TagService]
+    providers: [TagService],
+    exports: [TagService]
 })
 export class TagModule {}

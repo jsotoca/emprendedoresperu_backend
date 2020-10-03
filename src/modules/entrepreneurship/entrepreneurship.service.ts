@@ -1,3 +1,4 @@
+import { TagService } from './../tag/tag.service';
 import { SubcategoryService } from './../subcategory/subcategory.service';
 import { Injectable } from '@nestjs/common';
 import CreateEntrepreneurshipDTO from './dto/create-entrepreneurship.dto';
@@ -15,7 +16,8 @@ export class EntrepreneurshipService {
         @InjectRepository(EntrepreneurshipRepository)
         private readonly entrepreneurshipRepository:EntrepreneurshipRepository,
         private readonly subcategoryService:SubcategoryService,
-        private readonly S3:S3Service,
+        private readonly tagService:TagService,
+        private readonly S3:S3Service
     ){}
 
     async createEntrepreneurship(
@@ -26,7 +28,14 @@ export class EntrepreneurshipService {
     ){
         const subcategory:Subcategory = await this.subcategoryService.getSubcategory(createEntrepreneurshipDTO.subcategory);
         delete createEntrepreneurshipDTO.subcategory;
-        const entrepreneurship = await this.entrepreneurshipRepository.createEntrepreneurship(createEntrepreneurshipDTO,user,subcategory);
+        const { tags } = createEntrepreneurshipDTO;
+        const entreprenurshipTags = [];
+        for (let i = 0; i < tags.length; i++) {
+            const tag = await this.tagService.getTag(tags[i]);
+            entreprenurshipTags.push(tag);
+        }
+        delete createEntrepreneurshipDTO.tags;
+        const entrepreneurship = await this.entrepreneurshipRepository.createEntrepreneurship(createEntrepreneurshipDTO,user,subcategory,entreprenurshipTags);
         if(entrepreneurship && (logo || cover)){
             if(logo){
                 const { Location }= await this.S3.uploadImage(logo,`${user.id}/logo`);
