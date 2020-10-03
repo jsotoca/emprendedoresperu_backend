@@ -1,8 +1,9 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, RelationId, JoinColumn } from "typeorm";
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, RelationId, JoinColumn, ManyToMany, JoinTable } from "typeorm";
 import { classToPlain, Exclude } from "class-transformer";
 import User from "../../modules/user/user.entity";
 import Category from "../category/category.entity";
 import Subcategory from "../subcategory/subcategory.entity";
+import Tag from "../tag/tag.entity";
 
 @Entity('entrepreneurship')
 export default class Entrepreneurship extends BaseEntity {
@@ -68,6 +69,14 @@ export default class Entrepreneurship extends BaseEntity {
     @JoinColumn({ name: "user" })
     @Exclude({toPlainOnly:true})
     user:User;
+
+    @ManyToMany(type => Tag, { cascade: true })
+    @JoinTable({
+        name: 'entrepreneurship_has_tags',
+        joinColumn: { name: 'entrepreneuship', referencedColumnName: 'id'},
+        inverseJoinColumn: { name: 'tag', referencedColumnName: 'id'},
+    })
+    tags: Tag[];
 
     toJSON(){
         return classToPlain(this);

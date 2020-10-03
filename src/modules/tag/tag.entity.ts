@@ -7,4 +7,7 @@ export default class Tag extends BaseEntity {
 
     @Column({nullable:false,unique:true})
     description:string;
+
+    @Column()
+    icon:string;
 }

@@ -24,7 +24,7 @@ export default class CategoryRepository extends Repository<Category> {
         let {page, limit, search} = getFiltersCategoriesDTO;
         if(!page)page=1;if(!limit)limit=20;
         const skip = (page-1)*limit;
-        const query = this.createQueryBuilder('entrepreneurship')
+        const query = this.createQueryBuilder('category')
                     .orderBy('name','ASC')
                     .offset(skip)
                     .limit(limit);
