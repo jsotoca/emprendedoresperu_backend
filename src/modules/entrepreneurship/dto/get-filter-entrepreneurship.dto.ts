@@ -16,7 +16,7 @@ export default class GetFiltersEntrepreneurshipDTO {
     @IsOptional()
     @Type(() => Number)
     @IsInt()
-    category:number;
+    subcategory:number;
 
     @IsOptional()
     search:string;

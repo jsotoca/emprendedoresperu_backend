@@ -1,6 +1,6 @@
 import { classToPlain, Exclude } from "class-transformer";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import Entrepreneurship from "../entrepreneurship/entrepreneurship.entity";
+import Subcategory from "../subcategory/subcategory.entity";
 
 @Entity('category')
 export default class Category extends BaseEntity {
@@ -16,9 +16,9 @@ export default class Category extends BaseEntity {
     @Column({nullable:false})
     image:string;
 
-    @OneToMany(type=>Entrepreneurship,entrepreneurship=>entrepreneurship.category,{eager:true})
+    @OneToMany(type=>Subcategory,subcategory=>subcategory.category,{eager:true})
     @Exclude({toPlainOnly:true})
-    entrepreneurships:Entrepreneurship[];
+    subcategories:Subcategory[];
 
     toJSON(){
         return classToPlain(this);

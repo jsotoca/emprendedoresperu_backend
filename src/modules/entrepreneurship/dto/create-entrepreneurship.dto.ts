@@ -23,7 +23,7 @@ export default class CreateEntrepreneurshipDTO {
     @IsNotEmpty()
     @Type(() => Number)
     @IsInt()
-    category:number;
+    subcategory:number;
     
     @IsNotEmpty()
     @IsString()

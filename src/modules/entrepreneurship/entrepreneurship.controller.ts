@@ -46,11 +46,4 @@ export class EntrepreneurshipController {
         return await this.entrepreneurshipService.getEntrepreneurship(id);
     }
 
-    @Get('/test')
-    @UseGuards(AuthGuard('jwt'),RolesGuard)
-    @Roles(['ADMIN','MOD'])
-    testGuards(        
-    ){
-        return "hola mundo"; 
-    }
 }

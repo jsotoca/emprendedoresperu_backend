@@ -4,14 +4,14 @@ import { EntrepreneurshipController } from './entrepreneurship.controller';
 import { EntrepreneurshipService } from './entrepreneurship.service';
 import { UserModule } from '../../modules/user/user.module';
 import EntrepreneurshipRepository from './entrepreneurship.repository';
-import { CategoryModule } from '../category/category.module';
+import { SubcategoryModule } from './../subcategory/subcategory.module';
 import { ServicesModule } from './../../services/services.module';
 
 @Module({
   imports:[
     TypeOrmModule.forFeature([EntrepreneurshipRepository]),
     UserModule,
-    CategoryModule,
+    SubcategoryModule,
     ServicesModule
   ],
   controllers: [EntrepreneurshipController],

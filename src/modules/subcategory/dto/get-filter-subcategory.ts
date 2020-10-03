@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
 import { IsOptional, IsNumber } from 'class-validator';
 
-export default class GetFiltersCategoriesDTO {
+export default class GetFiltersSubcategoriesDTO {
 
     @IsOptional()
     @IsNumber()

@@ -2,6 +2,7 @@ import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, M
 import { classToPlain, Exclude } from "class-transformer";
 import User from "../../modules/user/user.entity";
 import Category from "../category/category.entity";
+import Subcategory from "../subcategory/subcategory.entity";
 
 @Entity('entrepreneurship')
 export default class Entrepreneurship extends BaseEntity {
@@ -17,9 +18,9 @@ export default class Entrepreneurship extends BaseEntity {
     @Column({nullable:false})
     slogan:string;
 
-    @ManyToOne(type=>Category,category=>category.entrepreneurships,{eager:false})
-    @JoinColumn({ name: "category" })
-    category:Category;
+    @ManyToOne(type=>Subcategory,subcategory=>subcategory.entrepreneurships,{eager:false})
+    @JoinColumn({ name: "subcategory" })
+    subcategory:Subcategory;
     
     @Column({nullable:false})
     phone:string;
