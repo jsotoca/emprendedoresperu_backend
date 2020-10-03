@@ -11,6 +11,9 @@ export default class Category extends BaseEntity {
     name:string;
 
     @Column({nullable:false})
+    icon:string;
+
+    @Column({nullable:false})
     image:string;
 
     @OneToMany(type=>Entrepreneurship,entrepreneurship=>entrepreneurship.category,{eager:true})

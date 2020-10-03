@@ -12,11 +12,13 @@ export class CategoryService {
         private readonly S3:S3Service
     ){}
 
-    async createCategory(createCategoryDTO:CreateCategoryDTO,image:any){
+    async createCategory(createCategoryDTO:CreateCategoryDTO,icon:any,image:any){
         const category = await this.categoryRepository.createCategory(createCategoryDTO);
-        if(category && image){
-            const { Location }= await this.S3.uploadImage(image,'categories');
-            category.image = Location;
+        if(category && (icon && image)){
+            const { Location:iconUrl }= await this.S3.uploadImage(icon,'icons');
+            category.icon = iconUrl;
+            const { Location:imageUrl }= await this.S3.uploadImage(image,'categories');
+            category.image = imageUrl;
             try {
                 await category.save();
             } catch (error) {
