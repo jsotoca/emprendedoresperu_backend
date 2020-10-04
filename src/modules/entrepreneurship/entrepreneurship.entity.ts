@@ -3,6 +3,7 @@ import { classToPlain, Exclude } from "class-transformer";
 import User from "../../modules/user/user.entity";
 import Category from "../category/category.entity";
 import Subcategory from "../subcategory/subcategory.entity";
+import District from "../district/district.entity";
 import Tag from "../tag/tag.entity";
 
 @Entity('entrepreneurship')
@@ -22,6 +23,10 @@ export default class Entrepreneurship extends BaseEntity {
     @ManyToOne(type=>Subcategory,subcategory=>subcategory.entrepreneurships,{eager:false})
     @JoinColumn({ name: "subcategory" })
     subcategory:Subcategory;
+
+    @ManyToOne(type=>District,district=>district.entrepreneurships,{eager:false})
+    @JoinColumn({ name: "district" })
+    district:District;
     
     @Column({nullable:false})
     phone:string;

@@ -1,3 +1,4 @@
+import { DistrictModule } from './../district/district.module';
 import { TagModule } from './../tag/tag.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
@@ -13,6 +14,7 @@ import { ServicesModule } from './../../services/services.module';
     TypeOrmModule.forFeature([EntrepreneurshipRepository]),
     UserModule,
     SubcategoryModule,
+    DistrictModule,
     TagModule,
     ServicesModule
   ],

@@ -5,6 +5,7 @@ import User from "../user/user.entity";
 import GetFiltersEntrepreneurshipDTO from "./dto/get-filter-entrepreneurship.dto";
 import Subcategory from "../subcategory/subcategory.entity";
 import Tag from "../tag/tag.entity";
+import District from "../district/district.entity";
 @EntityRepository(Entrepreneurship)
 export default class EntrepreneurshipRepository extends Repository<Entrepreneurship> {
 
@@ -12,12 +13,14 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
         createEntrepreneurshipDTO:CreateEntrepreneurshipDTO,
         user:User,
         subcategory:Subcategory,
+        district:District,
         tags:Tag[]
     ){
         const entrepreneurship = new Entrepreneurship();
         for(let field in createEntrepreneurshipDTO) entrepreneurship[field] = createEntrepreneurshipDTO[field];
         entrepreneurship.user = user;
         entrepreneurship.subcategory = subcategory;
+        entrepreneurship.district = district;
         entrepreneurship.tags = tags;
         try {
             await entrepreneurship.save();

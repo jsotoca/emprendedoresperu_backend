@@ -9,6 +9,7 @@ import { EntrepreneurshipModule } from './modules/entrepreneurship/entrepreneurs
 import { CategoryModule } from './modules/category/category.module';
 import { SubcategoryModule } from './modules/subcategory/subcategory.module';
 import { TagModule } from './modules/tag/tag.module';
+import { DistrictModule } from './modules/district/district.module';
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal:true}),
@@ -20,6 +21,7 @@ import { TagModule } from './modules/tag/tag.module';
     CategoryModule,
     SubcategoryModule,
     TagModule,
+    DistrictModule,
   ]
 })
 export class AppModule {
