@@ -10,6 +10,8 @@ import { CategoryModule } from './modules/category/category.module';
 import { SubcategoryModule } from './modules/subcategory/subcategory.module';
 import { TagModule } from './modules/tag/tag.module';
 import { DistrictModule } from './modules/district/district.module';
+import { DealModule } from './modules/deal/deal.module';
+import { ProductModule } from './modules/product/product.module';
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal:true}),
@@ -22,6 +24,8 @@ import { DistrictModule } from './modules/district/district.module';
     SubcategoryModule,
     TagModule,
     DistrictModule,
+    DealModule,
+    ProductModule,
   ]
 })
 export class AppModule {
