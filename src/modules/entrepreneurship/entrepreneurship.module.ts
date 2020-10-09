@@ -19,6 +19,7 @@ import { ServicesModule } from './../../services/services.module';
     ServicesModule
   ],
   controllers: [EntrepreneurshipController],
-  providers: [EntrepreneurshipService]
+  providers: [EntrepreneurshipService],
+  exports: [EntrepreneurshipService]
 })
 export class EntrepreneurshipModule {}

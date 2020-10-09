@@ -1,10 +1,10 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, RelationId, JoinColumn, ManyToMany, JoinTable } from "typeorm";
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, RelationId, JoinColumn, ManyToMany, JoinTable, OneToMany } from "typeorm";
 import { classToPlain, Exclude } from "class-transformer";
 import User from "../../modules/user/user.entity";
-import Category from "../category/category.entity";
 import Subcategory from "../subcategory/subcategory.entity";
 import District from "../district/district.entity";
 import Tag from "../tag/tag.entity";
+import Deal from "../deal/deal.entity";
 
 @Entity('entrepreneurship')
 export default class Entrepreneurship extends BaseEntity {
@@ -82,6 +82,10 @@ export default class Entrepreneurship extends BaseEntity {
         inverseJoinColumn: { name: 'tag', referencedColumnName: 'id'},
     })
     tags: Tag[];
+
+    @OneToMany(type=>Deal,deal=>deal.entrepreneurship,{eager:true})
+    @Exclude({toPlainOnly:true})
+    deals:Deal[];
 
     toJSON(){
         return classToPlain(this);
