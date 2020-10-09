@@ -41,7 +41,7 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
                     .limit(limit);
         if(userId) query.where('userId = :userId',{userId});
         if(subcategory) query.andWhere('subcategory = :subcategory',{subcategory});
-        if(search) query.andWhere('name like :search OR description like :search OR slogan like :search OR subcategory like :search',{search:`%${search}%`});
+        if(search) query.andWhere('entrepreneurship.name like :search OR description like :search OR slogan like :search OR subcategory like :search',{search:`%${search}%`});
         const entrepreneurships = await query.getManyAndCount();
         return {
             total:entrepreneurships[1],
