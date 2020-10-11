@@ -27,7 +27,8 @@ export default class DealRepository extends Repository<Deal> {
         if(!page)page=1;if(!limit)limit=5;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('deal')
-                    .orderBy('created_at','DESC')
+                    .innerJoinAndSelect('deal.entrepreneurship', 'entrepreneurship')
+                    .orderBy('deal.created_at','DESC')
                     .offset(skip)
                     .limit(limit);
         if(search) query.andWhere('name like :search OR description like :search',{search:`%${search}%`});

@@ -27,8 +27,9 @@ export default class SubcategoryRepository extends Repository<Subcategory> {
         let {page, limit, search} = getFilterSubcategoriesDTO;
         if(!page)page=1;if(!limit)limit=20;
         const skip = (page-1)*limit;
-        const query = this.createQueryBuilder('category')
-                    .orderBy('name','ASC')
+        const query = this.createQueryBuilder('subcategory')
+                    .innerJoinAndSelect('subcategory.category', 'category')
+                    .orderBy('subcategory.name','ASC')
                     .offset(skip)
                     .limit(limit);
         if(search) query.andWhere('name like :search',{search:`%${search}%`});
