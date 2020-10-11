@@ -47,7 +47,7 @@ export class EntrepreneurshipService {
                 entrepreneurship.logo = Location;
             }
             if(cover){
-                const { Location }= await this.S3.uploadImage(logo,`${user.id}/cover`);
+                const { Location }= await this.S3.uploadImage(cover,`${user.id}/cover`);
                 entrepreneurship.cover = Location;
             }
             try {
