@@ -66,7 +66,7 @@ export class EntrepreneurshipService {
     async getEntrepreneurship(id:number){
         const entrepreneurship = await this.entrepreneurshipRepository.findOne(
             id,
-            {relations:['subcategory']}
+            {relations:['subcategory','district','tags']}
         );
         return {ok:true,entrepreneurship};
     }

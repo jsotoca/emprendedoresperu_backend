@@ -53,4 +53,14 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
         };
     }
     
+    async searchEntrepreneurship(id){
+        const entreprenership = await this.createQueryBuilder('entrepreneurship')
+        .innerJoinAndSelect('entrepreneurship.subcategory', 'subcategory')
+        .innerJoinAndSelect('entrepreneurship.district', 'district')
+        .innerJoinAndSelect('entrepreneurship.tags', 'tag')
+        .where("entrepreneurship.id = :id", { id })
+        .getOne();
+        return entreprenership;    
+    }
+
 }
