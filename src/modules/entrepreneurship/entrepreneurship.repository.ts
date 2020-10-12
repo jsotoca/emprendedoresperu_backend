@@ -37,7 +37,7 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
         const query = this.createQueryBuilder('entrepreneurship')
                     .innerJoinAndSelect('entrepreneurship.subcategory', 'subcategory')
                     .innerJoinAndSelect('entrepreneurship.district', 'district')
-                    // .innerJoinAndSelect('entrepreneurship.tags', 'tag')
+                    .leftJoinAndSelect('entrepreneurship.tags', 'tag')
                     .orderBy('entrepreneurship.created_at','DESC')
                     .offset(skip)
                     .limit(limit);
