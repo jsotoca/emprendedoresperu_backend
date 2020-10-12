@@ -84,7 +84,7 @@ export default class Entrepreneurship extends BaseEntity {
     tags: Tag[];
 
     @OneToMany(type=>Deal,deal=>deal.entrepreneurship,{eager:true})
-    // @Exclude({toPlainOnly:true})
+    @Exclude({toPlainOnly:true})
     deals:Deal[];
 
     toJSON(){
