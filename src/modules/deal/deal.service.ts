@@ -37,6 +37,9 @@ export class DealService {
     }
 
     async getDeal(id:number){
-        return await this.dealRepository.findOne(id);
+        return await this.dealRepository.findOne(
+            id,
+            {relations:['entrepreneurship']}
+        );
     }
 }

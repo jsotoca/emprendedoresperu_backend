@@ -13,6 +13,9 @@ export default class Deal extends BaseEntity {
     description:string;
 
     @Column({nullable:false})
+    type:number;
+
+    @Column({nullable:false})
     image:string;
 
     @Column({nullable:false})

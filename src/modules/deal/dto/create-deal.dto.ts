@@ -14,6 +14,11 @@ export default class CreateDealDTO {
     description:string;
 
     @IsNotEmpty()
+    @Type(() => Number)
+    @IsInt()
+    type:number;
+
+    @IsNotEmpty()
     @IsDate()
     @Type(() => Date)
     start_date:string;
