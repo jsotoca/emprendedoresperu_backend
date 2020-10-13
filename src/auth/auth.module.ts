@@ -5,12 +5,16 @@ import { UserModule } from './../modules/user/user.module';
 import { JwtProvider } from './jwt/jwt.provider';
 import { ServicesModule } from './../services/services.module';
 import JwtStrategy from './jwt/jwt.strategy';
+import { EntrepreneurshipModule } from 'src/modules/entrepreneurship/entrepreneurship.module';
+import { DealModule } from 'src/modules/deal/deal.module';
 
 @Module({
   imports:[
     UserModule,
     JwtProvider,
-    ServicesModule
+    ServicesModule,
+    EntrepreneurshipModule,
+    DealModule
   ],
   controllers: [AuthController],
   providers: [

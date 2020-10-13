@@ -13,6 +13,7 @@ import { DealController } from './deal.controller';
     EntrepreneurshipModule
   ],
   providers: [DealService],
+  exports: [DealService],
   controllers: [DealController]
 })
 export class DealModule {}

@@ -42,4 +42,8 @@ export class DealService {
             {relations:['entrepreneurship']}
         );
     }
+
+    async getDealsByUser(user:number){
+        return this.dealRepository.getDealsByUser(user);
+    }
 }

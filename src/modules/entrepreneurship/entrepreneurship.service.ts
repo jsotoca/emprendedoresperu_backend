@@ -70,4 +70,8 @@ export class EntrepreneurshipService {
         );
         return {ok:true,entrepreneurship};
     }
+
+    async getEntrepreneurshipsByUser(user:number){
+        return this.entrepreneurshipRepository.getEntrepreneurshipsByUser(user);
+    }
 }

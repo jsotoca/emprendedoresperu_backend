@@ -1,3 +1,4 @@
+import { DealService } from './../modules/deal/deal.service';
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Connection } from 'typeorm';
 import UserRepository from '../modules/user/user.repository';
@@ -8,6 +9,7 @@ import AuthCrendentialsDTO from '../modules/user/dto/auth.dto';
 import SignUpDTO from '../modules/user/dto/signup.dto';
 import NodemailerService from '../services/nodemailer/mailer.service';
 import { sign,verify } from 'jsonwebtoken';
+import { EntrepreneurshipService } from 'src/modules/entrepreneurship/entrepreneurship.service';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +19,9 @@ export class AuthService {
     constructor(
         private readonly connection: Connection,
         private readonly jwtService:JwtService,
-        private readonly mailer:NodemailerService
+        private readonly mailer:NodemailerService,
+        private readonly entrepreneurshipService:EntrepreneurshipService,
+        private readonly DealService:DealService
     ) {
         this.userRepository = this.connection.getCustomRepository(UserRepository);
     }
@@ -74,5 +78,15 @@ export class AuthService {
         const {password,created_at} = user;
         const secret = password+"-"+created_at;
         return verify(token,secret);
+    }
+
+    async detailsAccount(user:User){
+        const entrepreneurships = await this.entrepreneurshipService.getEntrepreneurshipsByUser(user.id);
+        const deals = await this.DealService.getDealsByUser(user.id);
+        return {
+            user,
+            entrepreneurships,
+            deals
+        }
     }
 }

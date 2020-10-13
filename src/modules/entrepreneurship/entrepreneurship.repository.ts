@@ -63,4 +63,12 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
         return entreprenership;    
     }
 
+    async getEntrepreneurshipsByUser(user:number){
+        const query = this.createQueryBuilder('entrepreneurship')
+                    .innerJoinAndSelect('entrepreneurship.user', 'user')
+                    .orderBy('entrepreneurship.created_at','DESC')
+        query.where('entrepreneurship.user = :user',{user});
+        return await query.getMany();
+    }
+
 }

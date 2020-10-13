@@ -41,4 +41,13 @@ export default class DealRepository extends Repository<Deal> {
         };
     }
     
+    async getDealsByUser(user:number){
+        const query = this.createQueryBuilder('deal')
+                    .innerJoinAndSelect('deal.entrepreneurship', 'entrepreneurship')
+                    .innerJoinAndSelect('entrepreneurship.user', 'user')
+                    .orderBy('entrepreneurship.created_at','DESC')
+        query.where('entrepreneurship.user = :user',{user});
+        return await query.getMany();
+    }
+
 }

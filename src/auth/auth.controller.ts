@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import SignUpDTO from '../modules/user/dto/signup.dto';
 import AuthCrendentialsDTO from '../modules/user/dto/auth.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from './decorators/get-user.decorator';
+import User from 'src/modules/user/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -41,10 +43,12 @@ export class AuthController {
         return await this.authService.resetPassword(password,email,token);
     }
 
-    @Get('/demo')
+    @Get('/myaccount')
     @UseGuards(AuthGuard('jwt'))
-    saludo(){
-        return {message:'hola mundo'}
+    async createEntrepreneurship(
+        @GetUser() user:User
+    ){
+        return await this.authService.detailsAccount(user);
     }
 
 }
