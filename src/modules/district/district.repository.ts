@@ -6,7 +6,7 @@ import GetFiltersDistrictsDTO from './dto/get-filters-disctricts.dto';
 export default class DistrictRepository extends Repository<District> {
     async getDistricts(getFiltersDistrictsDTO:GetFiltersDistrictsDTO){
         let {page, limit, search} = getFiltersDistrictsDTO;
-        if(!page)page=1;if(!limit)limit=20;
+        if(!page)page=1;if(!limit)limit=100;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('district')
                     .orderBy('district','ASC')

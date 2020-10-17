@@ -1,7 +1,7 @@
 import { Roles } from './../../auth/decorators/roles.decorator';
 import { RolesGuard } from './../../auth/guards/roles.guard';
 import { SubcategoryService } from './subcategory.service';
-import { Controller, Post, UseGuards, UseInterceptors, Body, UploadedFiles, Get } from '@nestjs/common';
+import { Controller, Post, UseGuards, UseInterceptors, Body, UploadedFiles, Get, Param } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import CreateSubcategoryDTO from './dto/create-subcategory.dto';
@@ -33,5 +33,12 @@ export class SubcategoryController {
         @Body() getFiltersSubcategoriesDTO:GetFiltersSubcategoriesDTO
     ){
         return await this.subcategoryService.getSubcategories(getFiltersSubcategoriesDTO);
+    }
+
+    @Get('/category/:id')
+    async searchSubcategoriesByCategorie(
+        @Param('id') id:number
+    ){
+        return await this.subcategoryService.searchSubcategoriesByCategorie(id);
     }
 }

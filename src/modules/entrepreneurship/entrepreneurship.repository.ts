@@ -32,7 +32,7 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
 
     async getEntrepreneurships(GetFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO,userId?:string){
         let {page, limit, subcategory, search} = GetFiltersEntrepreneurshipDTO;
-        if(!page)page=1;if(!limit)limit=5;
+        if(!page)page=1;if(!limit)limit=100;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('entrepreneurship')
                     .innerJoinAndSelect('entrepreneurship.subcategory', 'subcategory')

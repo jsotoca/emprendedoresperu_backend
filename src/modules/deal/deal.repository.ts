@@ -24,7 +24,7 @@ export default class DealRepository extends Repository<Deal> {
 
     async getDeals(getFiltersDealDTO:GetFiltersDealDTO){
         let {page, limit, search} = getFiltersDealDTO;
-        if(!page)page=1;if(!limit)limit=5;
+        if(!page)page=1;if(!limit)limit=45;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('deal')
                     .innerJoinAndSelect('deal.entrepreneurship', 'entrepreneurship')

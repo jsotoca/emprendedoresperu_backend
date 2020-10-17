@@ -40,4 +40,8 @@ export class SubcategoryService {
     async getSubcategory(id:number){
         return await this.subcategoryRepository.findOne(id);
     }
+
+    async searchSubcategoriesByCategorie(id:number){
+        return await this.subcategoryRepository.searchSubcategoriesByCategorie(id);
+    }
 }

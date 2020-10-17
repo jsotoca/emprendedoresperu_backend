@@ -22,7 +22,7 @@ export default class CategoryRepository extends Repository<Category> {
 
     async getCategories(getFiltersCategoriesDTO:GetFiltersCategoriesDTO){
         let {page, limit, search} = getFiltersCategoriesDTO;
-        if(!page)page=1;if(!limit)limit=20;
+        if(!page)page=1;if(!limit)limit=35;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('category')
                     .leftJoinAndSelect('category.subcategories', 'subcategory')

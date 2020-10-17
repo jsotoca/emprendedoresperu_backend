@@ -25,7 +25,7 @@ export default class SubcategoryRepository extends Repository<Subcategory> {
 
     async getSubcategories(getFilterSubcategoriesDTO:GetFiltersSubcategoriesDTO){
         let {page, limit, search} = getFilterSubcategoriesDTO;
-        if(!page)page=1;if(!limit)limit=20;
+        if(!page)page=1;if(!limit)limit=40;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('subcategory')
                     .innerJoinAndSelect('subcategory.category', 'category')
@@ -40,6 +40,14 @@ export default class SubcategoryRepository extends Repository<Subcategory> {
             limit,
             data:subcategories[0]
         };
+    }
+
+    async searchSubcategoriesByCategorie(id){
+        const entreprenership = await this.createQueryBuilder('subcategory')
+        .innerJoinAndSelect('subcategory.category', 'category')
+        .where("category.id = :id", { id })
+        .getMany();
+        return entreprenership;    
     }
 
 }
