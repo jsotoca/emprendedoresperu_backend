@@ -35,6 +35,13 @@ export class SubcategoryController {
         return await this.subcategoryService.getSubcategories(getFiltersSubcategoriesDTO);
     }
 
+    @Get('/search/:id')
+    async searchSubcategories(
+        @Param('id') id:number
+    ){
+        return await this.subcategoryService.getSubcategory(id);
+    }
+
     @Get('/category/:id')
     async searchSubcategoriesByCategorie(
         @Param('id') id:number

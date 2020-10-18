@@ -38,7 +38,7 @@ export class SubcategoryService {
     }
 
     async getSubcategory(id:number){
-        return await this.subcategoryRepository.findOne(id);
+        return await this.subcategoryRepository.findOne(id,{relations:['category']});
     }
 
     async searchSubcategoriesByCategorie(id:number){
