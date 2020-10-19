@@ -35,9 +35,9 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
         if(!page)page=1;if(!limit)limit=100;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('entrepreneurship')
-                    .innerJoinAndSelect('entrepreneurship.subcategory', 'subcategory')
-                    .innerJoinAndSelect('entrepreneurship.district', 'district')
-                    .innerJoinAndSelect('entrepreneurship.tags', 'tag')
+                    .leftJoinAndSelect('entrepreneurship.subcategory', 'subcategory')
+                    .leftJoinAndSelect('entrepreneurship.district', 'district')
+                    .leftJoinAndSelect('entrepreneurship.tags', 'tag')
                     .orderBy('entrepreneurship.created_at','DESC')
                     .offset(skip)
                     .limit(limit);
@@ -51,6 +51,14 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
             limit,
             data:entrepreneurships[0]
         };
+    }
+
+    async getEntrepreneurship(id,user){
+        const entreprenership = await this.createQueryBuilder('entrepreneurship')
+        .where("entrepreneurship.id = :id", { id })
+        .andWhere("entrepreneurship.user = :user", { user })
+        .getOne();
+        return entreprenership;    
     }
     
     async searchEntrepreneurship(id){

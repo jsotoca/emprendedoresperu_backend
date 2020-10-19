@@ -1,7 +1,7 @@
 import { DistrictService } from './../district/district.service';
 import { TagService } from './../tag/tag.service';
 import { SubcategoryService } from './../subcategory/subcategory.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import CreateEntrepreneurshipDTO from './dto/create-entrepreneurship.dto';
 import User from '../user/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,6 +10,7 @@ import GetFiltersEntrepreneurshipDTO from './dto/get-filter-entrepreneurship.dto
 import S3Service from '../../services/aws/s3.service';
 import Subcategory from '../subcategory/subcategory.entity';
 import District from '../district/district.entity';
+import EditEntrepreneurshipDTO from './dto/edit-entrepreneurship.dto';
 
 @Injectable()
 export class EntrepreneurshipService {
@@ -57,6 +58,62 @@ export class EntrepreneurshipService {
             }
         }
         return {ok:true,entrepreneurship};
+    }
+
+    async editEntrepreneurship(
+        editEntrepreneurshipDTO:EditEntrepreneurshipDTO,
+        user:User,
+        logo?:any,
+        cover?:any
+    ){
+        const { id } = editEntrepreneurshipDTO;
+        const entrepreneurship = await this.entrepreneurshipRepository.getEntrepreneurship(id,user.id);
+        if(!entrepreneurship) throw new UnauthorizedException();
+        //ah caray no es necesario guardar el logo ni el cover de vuelta pero bueee
+        if(!logo) editEntrepreneurshipDTO.logo = entrepreneurship.logo;
+        else {
+            const { Location } = await this.S3.uploadImage(logo,`${user.id}/logo`);
+            editEntrepreneurshipDTO.logo = Location;
+        }
+        if(!cover) editEntrepreneurshipDTO.cover = entrepreneurship.cover;
+        else {
+            const { Location } = await this.S3.uploadImage(cover,`${user.id}/cover`);
+            editEntrepreneurshipDTO.cover = Location;
+        }
+        const subcategory:Subcategory = await this.subcategoryService.getSubcategory(editEntrepreneurshipDTO.subcategory);
+        const district:District = await this.districtService.getDistrict(editEntrepreneurshipDTO.district);
+        const { tags } = editEntrepreneurshipDTO;
+        const entreprenurshipTags = [];
+        for (let i = 0; i < tags.length; i++) {
+            const tag = await this.tagService.getTag(tags[i]);
+            entreprenurshipTags.push(tag);
+        }
+        entrepreneurship.user = user;
+        entrepreneurship.subcategory = subcategory;
+        entrepreneurship.district = district;
+        entrepreneurship.tags = entreprenurshipTags;
+        entrepreneurship.logo = editEntrepreneurshipDTO.logo;
+        entrepreneurship.cover = editEntrepreneurshipDTO.cover;
+
+        delete editEntrepreneurshipDTO.subcategory;
+        delete editEntrepreneurshipDTO.district;
+        delete editEntrepreneurshipDTO.tags;
+        delete editEntrepreneurshipDTO.urlLogo;
+        delete editEntrepreneurshipDTO.urlCover;
+
+        await entrepreneurship.save();
+
+        const body = {};
+
+        for(let field in editEntrepreneurshipDTO){
+            if(editEntrepreneurshipDTO[field]) body[field] = editEntrepreneurshipDTO[field];
+        } 
+
+        console.log(body);
+
+        await this.entrepreneurshipRepository.update(id,body);
+        
+        return entrepreneurship;
     }
 
     async getEntrepreneurships(getFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO,userId?:string){
