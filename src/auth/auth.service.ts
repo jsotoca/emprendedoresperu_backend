@@ -10,6 +10,8 @@ import SignUpDTO from '../modules/user/dto/signup.dto';
 import NodemailerService from '../services/nodemailer/mailer.service';
 import { sign,verify } from 'jsonwebtoken';
 import { EntrepreneurshipService } from 'src/modules/entrepreneurship/entrepreneurship.service';
+import GetFiltersUsersDTO from 'src/modules/user/dto/get-filters-user.dto';
+import EditUserDTO from 'src/modules/user/dto/edit-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -80,6 +82,10 @@ export class AuthService {
         return verify(token,secret);
     }
 
+    async getUsers(getFiltersUsersDTO:GetFiltersUsersDTO){
+        return this.userRepository.getUsers(getFiltersUsersDTO);
+    }
+
     async detailsAccount(user:User){
         const entrepreneurships = await this.entrepreneurshipService.getEntrepreneurshipsByUser(user.id);
         const deals = await this.DealService.getDealsByUser(user.id);
@@ -87,6 +93,35 @@ export class AuthService {
             user,
             entrepreneurships,
             deals
+        }
+    }
+
+    async editUser(editUserDTO:EditUserDTO,user:User){
+        try {
+            const {id,fullname,phone,password} = editUserDTO;
+            if(user.id != id) throw new UnauthorizedException();
+            const editUser = await this.userRepository.findOne(id);
+            if(!editUser) throw new UnauthorizedException();
+            try {
+                if(fullname) editUser.fullname = fullname;
+                if(phone) editUser.phone = phone;
+                if(password) editUser.password = password;
+                else delete editUser.password;
+                await editUser.save();
+            } catch (error) {
+                throw error;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async unsubscribeUser(editUserDTO:EditUserDTO,user:User){
+        try {
+            if(user.id != editUserDTO.id) throw new UnauthorizedException();
+            await this.userRepository.update(editUserDTO.id,{actived:false});
+        } catch (error) {
+            throw error;
         }
     }
 }

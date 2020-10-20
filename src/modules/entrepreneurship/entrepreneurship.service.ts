@@ -11,6 +11,7 @@ import S3Service from '../../services/aws/s3.service';
 import Subcategory from '../subcategory/subcategory.entity';
 import District from '../district/district.entity';
 import EditEntrepreneurshipDTO from './dto/edit-entrepreneurship.dto';
+import { UserRoles } from '../user/user.roles';
 
 @Injectable()
 export class EntrepreneurshipService {
@@ -130,5 +131,27 @@ export class EntrepreneurshipService {
 
     async getEntrepreneurshipsByUser(user:number){
         return this.entrepreneurshipRepository.getEntrepreneurshipsByUser(user);
+    }
+
+    async verifyEntrepreneurship(id:number,user:User){
+        try {
+            if(user.role != UserRoles.ADMIN) throw new UnauthorizedException();
+            this.entrepreneurshipRepository.update(id,{isVerified:true});
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async unsubscribeEntrepreneurship(id:number,user:User){
+        try {
+            const entrepreneurship = await this.entrepreneurshipRepository.findOne(
+                id,
+                {relations:['user']}
+            );
+            if(user.id != entrepreneurship.user.id) throw new UnauthorizedException();
+            this.entrepreneurshipRepository.update(id,{actived:false});
+        } catch (error) {
+            throw error;
+        }
     }
 }

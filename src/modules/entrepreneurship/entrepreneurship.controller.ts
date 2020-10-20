@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UploadedFiles, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFiles, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { EntrepreneurshipService } from './entrepreneurship.service';
 import CreateEntrepreneurshipDTO from './dto/create-entrepreneurship.dto';
@@ -9,6 +9,7 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { Roles } from './../../auth/decorators/roles.decorator';
 import { RolesGuard } from './../../auth/guards/roles.guard';
 import EditEntrepreneurshipDTO from './dto/edit-entrepreneurship.dto';
+import { UserRoles } from '../user/user.roles';
 
 @Controller('entrepreneurship')
 export class EntrepreneurshipController {
@@ -62,6 +63,28 @@ export class EntrepreneurshipController {
         @Param('id') id:number
     ){
         return await this.entrepreneurshipService.getEntrepreneurship(id);
+    }
+
+    @Patch('/verify/:id')
+    @UseGuards(AuthGuard('jwt'),RolesGuard)
+    @Roles([UserRoles.ADMIN])
+    @UsePipes(ValidationPipe)
+    async verifyEntrepeneurship(
+        @Param('id') id:number,
+        @GetUser() user:User
+    ){
+        await await this.entrepreneurshipService.verifyEntrepreneurship(id,user);
+    }
+
+
+    @Delete('/unsubscribe/:id')
+    @UseGuards(AuthGuard('jwt'))
+    @UsePipes(ValidationPipe)
+    async unsubscribeEntrepeneurship(
+        @Param('id') id:number,
+        @GetUser() user:User
+    ){
+        await this.entrepreneurshipService.unsubscribeEntrepreneurship(id,user);
     }
 
 }

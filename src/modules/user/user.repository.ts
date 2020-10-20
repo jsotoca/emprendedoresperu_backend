@@ -3,6 +3,7 @@ import User from "./user.entity";
 import { ConflictException, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 import SignUpDTO from "./dto/signup.dto";
 import AuthCrendentialsDTO from "./dto/auth.dto";
+import GetFiltersUsersDTO from "./dto/get-filters-user.dto";
 
 @EntityRepository(User)
 export default class UserRepository extends Repository<User> {
@@ -27,5 +28,23 @@ export default class UserRepository extends Repository<User> {
         const user = await this.findOne({email});
         if(user && user.comparePasswords(password) && user.actived) return user;
         else throw new UnauthorizedException('Usuario y/o contraseña incorrectas.');
+    }
+
+    async getUsers(getFiltersUsersDTO:GetFiltersUsersDTO){
+        let {page, limit, search} = getFiltersUsersDTO;
+        if(!page)page=1;if(!limit)limit=20;
+        const skip = (page-1)*limit;
+        const query = this.createQueryBuilder('user')
+                    .offset(skip)
+                    .limit(limit)
+                    .orderBy('user.created_at','DESC');
+        if(search) query.where('user.fullname like :search',{search:`%${search}%`});
+        const users = await query.getManyAndCount();
+        return {
+            total:users[1],
+            page,
+            limit,
+            data:users[0]
+        };
     }
 }

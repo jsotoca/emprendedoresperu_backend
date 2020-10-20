@@ -41,7 +41,9 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
                     .orderBy('entrepreneurship.created_at','DESC')
                     .offset(skip)
                     .limit(limit);
-        if(userId) query.where('userId = :userId',{userId});
+        query.where('actived = true');
+        query.andWhere('isVerified = true');
+        // if(userId) query.where('userId = :userId',{userId});
         if(subcategory) query.andWhere('subcategory = :subcategory',{subcategory});
         if(search) query.andWhere('entrepreneurship.name like :search OR description like :search OR slogan like :search OR subcategory like :search',{search:`%${search}%`});
         const entrepreneurships = await query.getManyAndCount();
@@ -76,6 +78,7 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
                     .innerJoinAndSelect('entrepreneurship.user', 'user')
                     .orderBy('entrepreneurship.created_at','DESC')
         query.where('entrepreneurship.user = :user',{user});
+        query.andWhere('entrepreneurship.actived = true');
         return await query.getMany();
     }
 
