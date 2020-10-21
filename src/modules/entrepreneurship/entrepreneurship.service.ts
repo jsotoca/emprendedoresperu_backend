@@ -149,14 +149,11 @@ export class EntrepreneurshipService {
                 id,
                 {relations:['user']}
             );
-            console.log(user.id);
-            console.log(entrepreneurship.user.id);
             if(user.id != entrepreneurship.user.id) throw new UnauthorizedException();
             entrepreneurship.isVerified = false;
             entrepreneurship.actived = false;
-            console.log(entrepreneurship);
             await entrepreneurship.save();
-            return true;
+            return entrepreneurship;
         } catch (error) {
             throw error;
         }
