@@ -30,7 +30,7 @@ export default class CreateEntrepreneurshipDTO {
     @IsInt()
     district:number;
 
-    @IsNotEmpty()
+    @IsOptional()
     tags:number[];
     
     @IsNotEmpty()
