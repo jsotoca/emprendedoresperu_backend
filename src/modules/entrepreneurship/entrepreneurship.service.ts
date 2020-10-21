@@ -149,7 +149,7 @@ export class EntrepreneurshipService {
                 {relations:['user']}
             );
             if(user.id != entrepreneurship.user.id) throw new UnauthorizedException();
-            this.entrepreneurshipRepository.update(id,{actived:false});
+            this.entrepreneurshipRepository.update(id,{actived:false,isVerified:false});
         } catch (error) {
             throw error;
         }
