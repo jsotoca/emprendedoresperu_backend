@@ -84,7 +84,7 @@ export class EntrepreneurshipController {
         @Param('id') id:number,
         @GetUser() user:User
     ){
-        await this.entrepreneurshipService.unsubscribeEntrepreneurship(id,user);
+        return await this.entrepreneurshipService.unsubscribeEntrepreneurship(id,user);
     }
 
 }

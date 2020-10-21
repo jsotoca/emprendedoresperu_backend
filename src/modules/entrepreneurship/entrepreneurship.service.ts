@@ -137,6 +137,7 @@ export class EntrepreneurshipService {
         try {
             if(user.role != UserRoles.ADMIN) throw new UnauthorizedException();
             this.entrepreneurshipRepository.update(id,{isVerified:true});
+            return true;
         } catch (error) {
             throw error;
         }
@@ -155,6 +156,7 @@ export class EntrepreneurshipService {
             entrepreneurship.actived = false;
             console.log(entrepreneurship);
             await entrepreneurship.save();
+            return true;
         } catch (error) {
             throw error;
         }
