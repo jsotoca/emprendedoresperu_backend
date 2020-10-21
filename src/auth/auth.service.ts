@@ -108,6 +108,7 @@ export class AuthService {
                 if(password) editUser.password = password;
                 else delete editUser.password;
                 await editUser.save();
+                return true;
             } catch (error) {
                 throw error;
             }
@@ -120,6 +121,7 @@ export class AuthService {
         try {
             if(user.id != editUserDTO.id) throw new UnauthorizedException();
             await this.userRepository.update(editUserDTO.id,{actived:false});
+            return true;
         } catch (error) {
             throw error;
         }
