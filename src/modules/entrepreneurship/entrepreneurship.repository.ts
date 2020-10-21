@@ -38,6 +38,7 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
                     .leftJoinAndSelect('entrepreneurship.subcategory', 'subcategory')
                     .leftJoinAndSelect('entrepreneurship.district', 'district')
                     .leftJoinAndSelect('entrepreneurship.tags', 'tag')
+                    .leftJoinAndSelect('subcategory.category', 'category')
                     .orderBy('entrepreneurship.created_at','DESC')
                     .offset(skip)
                     .limit(limit);
