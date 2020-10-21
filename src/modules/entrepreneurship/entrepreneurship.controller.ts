@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFiles, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFiles, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { EntrepreneurshipService } from './entrepreneurship.service';
 import CreateEntrepreneurshipDTO from './dto/create-entrepreneurship.dto';
@@ -52,9 +52,8 @@ export class EntrepreneurshipController {
     @Get('/')
     @UsePipes(ValidationPipe)
     async getEntrepreneurships(
-        @Body() getFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO
+        @Query() getFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO
     ){
-        console.log(getFiltersEntrepreneurshipDTO);
         return await this.entrepreneurshipService.getEntrepreneurships(getFiltersEntrepreneurshipDTO);
     }
 
