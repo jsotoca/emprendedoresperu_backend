@@ -19,6 +19,11 @@ export default class GetFiltersEntrepreneurshipDTO {
     subcategory:number;
 
     @IsOptional()
+    @Type(() => Number)
+    @IsInt()
+    category:number;
+
+    @IsOptional()
     search:string;
 
 

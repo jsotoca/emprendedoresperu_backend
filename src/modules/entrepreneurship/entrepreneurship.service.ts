@@ -122,10 +122,7 @@ export class EntrepreneurshipService {
     }
 
     async getEntrepreneurship(id:number){
-        const entrepreneurship = await this.entrepreneurshipRepository.findOne(
-            id,
-            {relations:['subcategory','district','tags']}
-        );
+        const entrepreneurship = await this.entrepreneurshipRepository.searchEntrepreneurship(id);
         return {ok:true,entrepreneurship};
     }
 

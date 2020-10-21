@@ -24,14 +24,15 @@ export default class SubcategoryRepository extends Repository<Subcategory> {
     }
 
     async getSubcategories(getFilterSubcategoriesDTO:GetFiltersSubcategoriesDTO){
-        let {page, limit, search} = getFilterSubcategoriesDTO;
+        let {page, limit, category, search} = getFilterSubcategoriesDTO;
         if(!page)page=1;if(!limit)limit=40;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('subcategory')
-                    .innerJoinAndSelect('subcategory.category', 'category')
+                    .leftJoinAndSelect('subcategory.category', 'category')
                     .orderBy('subcategory.name','ASC')
                     .offset(skip)
                     .limit(limit);
+        if(category) query.andWhere('category like :category',{category:`%${category}%`});
         if(search) query.andWhere('name like :search',{search:`%${search}%`});
         const subcategories = await query.getManyAndCount();
         return {

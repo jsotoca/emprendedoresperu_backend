@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsOptional, IsNumber } from 'class-validator';
+import { IsOptional, IsNumber, IsInt } from 'class-validator';
 
 export default class GetFiltersSubcategoriesDTO {
 
@@ -12,6 +12,11 @@ export default class GetFiltersSubcategoriesDTO {
     @IsNumber()
     @Type(()=>Number)
     limit:number;
+
+    @IsOptional()
+    @Type(() => Number)
+    @IsInt()
+    category:number;
 
     @IsOptional()
     search:string;

@@ -31,7 +31,7 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
     }
 
     async getEntrepreneurships(GetFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO,userId?:string){
-        let {page, limit, subcategory, search} = GetFiltersEntrepreneurshipDTO;
+        let {page, limit, category, subcategory, search} = GetFiltersEntrepreneurshipDTO;
         if(!page)page=1;if(!limit)limit=100;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('entrepreneurship')
@@ -44,9 +44,9 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
                     .limit(limit);
         query.where('actived = true');
         query.andWhere('isVerified = true');
-        // if(userId) query.where('userId = :userId',{userId});
+        if(category) query.andWhere('category = :category',{category});
         if(subcategory) query.andWhere('subcategory = :subcategory',{subcategory});
-        if(search) query.andWhere('entrepreneurship.name like :search OR description like :search OR slogan like :search OR subcategory like :search',{search:`%${search}%`});
+        if(search) query.andWhere('entrepreneurship.name like :search OR entrepreneurship.description like :search OR slogan like :search OR subcategory.name like :search  OR category.name like :search',{search:`%${search}%`});
         const entrepreneurships = await query.getManyAndCount();
         return {
             total:entrepreneurships[1],
@@ -69,6 +69,7 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
         .innerJoinAndSelect('entrepreneurship.subcategory', 'subcategory')
         .innerJoinAndSelect('entrepreneurship.district', 'district')
         .innerJoinAndSelect('entrepreneurship.tags', 'tag')
+        .leftJoinAndSelect('subcategory.category', 'category')
         .where("entrepreneurship.id = :id", { id })
         .getOne();
         return entreprenership;    

@@ -54,6 +54,7 @@ export class EntrepreneurshipController {
     async getEntrepreneurships(
         @Body() getFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO
     ){
+        console.log(getFiltersEntrepreneurshipDTO);
         return await this.entrepreneurshipService.getEntrepreneurships(getFiltersEntrepreneurshipDTO);
     }
 
