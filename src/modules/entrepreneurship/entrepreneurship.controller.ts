@@ -77,7 +77,7 @@ export class EntrepreneurshipController {
     }
 
 
-    @Delete('/unsubscribe/:id')
+    @Patch('/unsubscribe/:id')
     @UseGuards(AuthGuard('jwt'))
     @UsePipes(ValidationPipe)
     async unsubscribeEntrepeneurship(
