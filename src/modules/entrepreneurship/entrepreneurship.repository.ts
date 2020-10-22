@@ -46,7 +46,13 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
         query.andWhere('isVerified = true');
         if(category) query.andWhere('category = :category',{category});
         if(subcategory) query.andWhere('subcategory = :subcategory',{subcategory});
-        if(search) query.andWhere('entrepreneurship.name like :search OR entrepreneurship.description like :search OR slogan like :search OR subcategory.name like :search  OR category.name like :search',{search:`%${search}%`});
+        if(search){
+            query.andWhere('entrepreneurship.name like :search and actived = true  and isVerified = true',{search:`%${search}%`});  
+            query.orWhere('entrepreneurship.description like :search and actived = true  and isVerified = true',{search:`%${search}%`});  
+            query.orWhere('entrepreneurship.slogan like :search and actived = true  and isVerified = true',{search:`%${search}%`});  
+            query.orWhere('category.name like :search and actived = true  and isVerified = true',{search:`%${search}%`});  
+            query.orWhere('subcategory.name like :search and actived = true  and isVerified = true',{search:`%${search}%`});  
+        }
         const entrepreneurships = await query.getManyAndCount();
         return {
             total:entrepreneurships[1],
