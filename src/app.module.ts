@@ -12,6 +12,7 @@ import { TagModule } from './modules/tag/tag.module';
 import { DistrictModule } from './modules/district/district.module';
 import { DealModule } from './modules/deal/deal.module';
 import { ProductModule } from './modules/product/product.module';
+import { AdsModule } from './modules/ads/ads.module';
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal:true}),
@@ -26,6 +27,7 @@ import { ProductModule } from './modules/product/product.module';
     DistrictModule,
     DealModule,
     ProductModule,
+    AdsModule,
   ]
 })
 export class AppModule {
