@@ -32,6 +32,13 @@ export class AuthController {
         return await this.authService.signIn(authCrendentialsDTO);
     }
 
+    @Post('/dashboard/signin')
+    async signInAdmin(
+        @Body(ValidationPipe) authCrendentialsDTO:AuthCrendentialsDTO
+    ){
+        return await this.authService.signInAdmin(authCrendentialsDTO);
+    }
+
     @Post('/forgotpassword')
     async forgortPassword(
         @Body('email') email:string

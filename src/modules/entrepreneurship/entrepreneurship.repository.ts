@@ -62,6 +62,24 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
         };
     }
 
+    async getEntrepreneurshipsDashboard(GetFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO){
+        let {page, limit,search} = GetFiltersEntrepreneurshipDTO;
+        if(!page)page=1;if(!limit)limit=5;
+        const skip = (page-1)*limit;
+        const query = this.createQueryBuilder('entrepreneurship')
+                    .orderBy('entrepreneurship.created_at','DESC')
+                    .offset(skip)
+                    .limit(limit);
+        if(search) query.andWhere('entrepreneurship.name like :search',{search:`%${search}%`});
+        const entrepreneurships = await query.getManyAndCount();
+        return {
+            total:entrepreneurships[1],
+            page,
+            limit,
+            data:entrepreneurships[0]
+        };
+    }
+
     async getEntrepreneurship(id,user){
         const entreprenership = await this.createQueryBuilder('entrepreneurship')
         .where("entrepreneurship.id = :id", { id })

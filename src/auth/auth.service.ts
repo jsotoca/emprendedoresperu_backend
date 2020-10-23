@@ -41,6 +41,12 @@ export class AuthService {
         return {ok:true,user,token};
     }
 
+    async signInAdmin(authCrendentialsDTO:AuthCrendentialsDTO){
+        const user:User = await this.userRepository.signInAdmin(authCrendentialsDTO);
+        const token = this.generateToken({id:user.id});
+        return {ok:true,user,token};
+    }
+
     async forgotPassword(email:string){
         const user = await this.userRepository.findOne({email});
         if(!user)throw new NotFoundException('email no encontrado en la base de datos.');

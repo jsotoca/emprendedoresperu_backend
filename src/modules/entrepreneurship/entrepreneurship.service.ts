@@ -121,6 +121,10 @@ export class EntrepreneurshipService {
         return this.entrepreneurshipRepository.getEntrepreneurships(getFiltersEntrepreneurshipDTO,userId);
     }
 
+    async getEntrepreneurshipsDashboard(getFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO){
+        return this.entrepreneurshipRepository.getEntrepreneurshipsDashboard(getFiltersEntrepreneurshipDTO);
+    }
+
     async getEntrepreneurship(id:number){
         const entrepreneurship = await this.entrepreneurshipRepository.searchEntrepreneurship(id);
         return {ok:true,entrepreneurship};
@@ -133,7 +137,7 @@ export class EntrepreneurshipService {
     async verifyEntrepreneurship(id:number,user:User){
         try {
             if(user.role != UserRoles.ADMIN) throw new UnauthorizedException();
-            this.entrepreneurshipRepository.update(id,{isVerified:true});
+            this.entrepreneurshipRepository.update(id,{isVerified:true,actived:true});
             return true;
         } catch (error) {
             throw error;

@@ -4,6 +4,7 @@ import { ConflictException, InternalServerErrorException, UnauthorizedException 
 import SignUpDTO from "./dto/signup.dto";
 import AuthCrendentialsDTO from "./dto/auth.dto";
 import GetFiltersUsersDTO from "./dto/get-filters-user.dto";
+import { UserRoles } from "./user.roles";
 
 @EntityRepository(User)
 export default class UserRepository extends Repository<User> {
@@ -27,6 +28,13 @@ export default class UserRepository extends Repository<User> {
         const {email,password} = authCredentialsDTO;
         const user = await this.findOne({email});
         if(user && user.comparePasswords(password) && user.actived) return user;
+        else throw new UnauthorizedException('Usuario y/o contraseña incorrectas.');
+    }
+
+    async signInAdmin(authCredentialsDTO:AuthCrendentialsDTO){
+        const {email,password} = authCredentialsDTO;
+        const user = await this.findOne({email});
+        if(user && user.comparePasswords(password) && user.actived && user.role == UserRoles.ADMIN) return user;
         else throw new UnauthorizedException('Usuario y/o contraseña incorrectas.');
     }
 
