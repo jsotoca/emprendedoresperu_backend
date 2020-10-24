@@ -24,12 +24,11 @@ export default class NodemailerService {
     }
 
     sendMailResetPassword(names:string,email:string,token:string){
-        const env_url = this.config.get<string>(configuration.ENV_URL);
-        const url = `${env_url}/auth/resetpassword/${email}/${token}`;
+        const url = `https://publilam.com/resetpassword?email=${email}&token=${token}`;
         this.mailerService.sendMail({
             to: email,
-            from: '"Emprendedores Perú No-Responder" <noresponder@sipandigital.com>',
-            subject: 'Resetear Contraseña en "Emprendedores Perú" 🚀',
+            from: '"Publilam No-Responder" <noresponder@publilam.com>',
+            subject: 'Resetear Contraseña en "Publilam" 🚀',
             template: 'resetpassword',
             context: {
                 names,
