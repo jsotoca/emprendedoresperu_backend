@@ -144,6 +144,41 @@ export class EntrepreneurshipService {
         }
     }
 
+    async desverifyEntrepreneurshipDashboard(id:number,user:User){
+        try {
+            if(user.role != UserRoles.ADMIN) throw new UnauthorizedException();
+            this.entrepreneurshipRepository.update(id,{isVerified:false});
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async unsubscribeEntrepreneurshipDashboard(id:number,user:User){
+        try {
+            if(user.role != UserRoles.ADMIN) throw new UnauthorizedException();
+            this.entrepreneurshipRepository.update(id,{isVerified:false,actived:false});
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async desverifyEntrepreneurship(id:number,user:User){
+        try {
+            const entrepreneurship = await this.entrepreneurshipRepository.findOne(
+                id,
+                {relations:['user']}
+            );
+            if(user.id != entrepreneurship.user.id) throw new UnauthorizedException();
+            entrepreneurship.isVerified = false;
+            await entrepreneurship.save();
+            return entrepreneurship;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async unsubscribeEntrepreneurship(id:number,user:User){
         try {
             const entrepreneurship = await this.entrepreneurshipRepository.findOne(

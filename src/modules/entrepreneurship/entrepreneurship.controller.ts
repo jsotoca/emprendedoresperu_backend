@@ -75,7 +75,7 @@ export class EntrepreneurshipController {
         return await this.entrepreneurshipService.getEntrepreneurship(id);
     }
 
-    @Patch('/verify/:id')
+    @Patch('/dashboard/verify/:id')
     @UseGuards(AuthGuard('jwt'),RolesGuard)
     @Roles([UserRoles.ADMIN])
     @UsePipes(ValidationPipe)
@@ -86,6 +86,37 @@ export class EntrepreneurshipController {
         await await this.entrepreneurshipService.verifyEntrepreneurship(id,user);
     }
 
+    @Patch('/dashboard/desverify/:id')
+    @UseGuards(AuthGuard('jwt'),RolesGuard)
+    @Roles([UserRoles.ADMIN])
+    @UsePipes(ValidationPipe)
+    async desverifyEntrepeneurshipDashboard(
+        @Param('id') id:number,
+        @GetUser() user:User
+    ){
+        await await this.entrepreneurshipService.desverifyEntrepreneurshipDashboard(id,user);
+    }
+
+    @Patch('/desverify/:id')
+    @UseGuards(AuthGuard('jwt'))
+    @UsePipes(ValidationPipe)
+    async desverifyEntrepeneurship(
+        @Param('id') id:number,
+        @GetUser() user:User
+    ){
+        await await this.entrepreneurshipService.desverifyEntrepreneurship(id,user);
+    }
+
+    @Delete('/dashboard/unsubscribe/:id')
+    @UseGuards(AuthGuard('jwt'),RolesGuard)
+    @Roles([UserRoles.ADMIN])
+    @UsePipes(ValidationPipe)
+    async unsubscribeEntrepeneurshipDashboard(
+        @Param('id') id:number,
+        @GetUser() user:User
+    ){
+        await await this.entrepreneurshipService.unsubscribeEntrepreneurshipDashboard(id,user);
+    }
 
     @Delete('/unsubscribe/:id')
     @UseGuards(AuthGuard('jwt'))
