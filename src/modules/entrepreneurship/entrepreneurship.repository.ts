@@ -32,8 +32,6 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
 
     async getEntrepreneurships(GetFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO,userId?:string){
         let {page, limit, category, subcategory, search} = GetFiltersEntrepreneurshipDTO;
-        if(page) page = Number(page);
-        if(limit) limit = Number(limit);
         if(!page)page=1;if(!limit)limit=100;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('entrepreneurship')
@@ -41,9 +39,9 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
                     .leftJoinAndSelect('entrepreneurship.district', 'district')
                     .leftJoinAndSelect('entrepreneurship.tags', 'tag')
                     .leftJoinAndSelect('subcategory.category', 'category')
+                    .orderBy('entrepreneurship.created_at','DESC')
                     .offset(skip)
-                    .limit(limit)
-                    .orderBy('entrepreneurship.created_at','DESC');
+                    .limit(limit);
         query.where('actived = true');
         query.andWhere('isVerified = true');
         if(category) query.andWhere('category = :category',{category});
@@ -55,12 +53,25 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
             query.orWhere('category.name like :search and actived = true  and isVerified = true',{search:`%${search}%`});  
             query.orWhere('subcategory.name like :search and actived = true  and isVerified = true',{search:`%${search}%`});  
         }
-        const entrepreneurships = await query.getMany();
+        const entrepreneurships = await query.getManyAndCount();
         return {
-            total:10,
+            total:entrepreneurships[1],
             page,
             limit,
-            data:entrepreneurships
+            data:entrepreneurships[0]
+        };
+    }
+
+    async getEntrepreneurshipsRecents(){
+        const query = this.createQueryBuilder('entrepreneurship')
+                    .orderBy('entrepreneurship.created_at','DESC')
+                    .limit(10);
+        const entrepreneurships = await query.getManyAndCount();
+        return {
+            total:entrepreneurships[1],
+            page:1,
+            limit:10,
+            data:entrepreneurships[0]
         };
     }
 

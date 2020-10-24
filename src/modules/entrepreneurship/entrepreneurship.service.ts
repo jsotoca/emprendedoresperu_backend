@@ -121,6 +121,10 @@ export class EntrepreneurshipService {
         return this.entrepreneurshipRepository.getEntrepreneurships(getFiltersEntrepreneurshipDTO,userId);
     }
 
+    async getEntrepreneurshipsRecents(){
+        return this.entrepreneurshipRepository.getEntrepreneurshipsRecents();
+    }
+
     async getEntrepreneurshipsDashboard(getFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO){
         return this.entrepreneurshipRepository.getEntrepreneurshipsDashboard(getFiltersEntrepreneurshipDTO);
     }

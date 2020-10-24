@@ -57,6 +57,11 @@ export class EntrepreneurshipController {
         return await this.entrepreneurshipService.getEntrepreneurships(getFiltersEntrepreneurshipDTO);
     }
 
+    @Get('/top/recent')
+    async getEntrepreneurshipsRecents(){
+        return await this.entrepreneurshipService.getEntrepreneurshipsRecents();
+    }
+
     @Get('/dashboard')
     @UseGuards(AuthGuard('jwt'),RolesGuard)
     @Roles([UserRoles.ADMIN])
