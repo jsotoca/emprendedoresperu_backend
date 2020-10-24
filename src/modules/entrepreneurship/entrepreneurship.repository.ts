@@ -55,12 +55,12 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
             query.orWhere('category.name like :search and actived = true  and isVerified = true',{search:`%${search}%`});  
             query.orWhere('subcategory.name like :search and actived = true  and isVerified = true',{search:`%${search}%`});  
         }
-        const entrepreneurships = await query.getManyAndCount();
+        const entrepreneurships = await query.getMany();
         return {
-            total:entrepreneurships[1],
+            total:10,
             page,
             limit,
-            data:entrepreneurships[0]
+            data:entrepreneurships
         };
     }
 
