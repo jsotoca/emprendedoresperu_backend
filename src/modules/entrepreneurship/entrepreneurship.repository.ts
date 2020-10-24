@@ -32,6 +32,8 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
 
     async getEntrepreneurships(GetFiltersEntrepreneurshipDTO:GetFiltersEntrepreneurshipDTO,userId?:string){
         let {page, limit, category, subcategory, search} = GetFiltersEntrepreneurshipDTO;
+        if(page) page = Number(page);
+        if(limit) limit = Number(limit);
         if(!page)page=1;if(!limit)limit=100;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('entrepreneurship')
@@ -39,9 +41,9 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
                     .leftJoinAndSelect('entrepreneurship.district', 'district')
                     .leftJoinAndSelect('entrepreneurship.tags', 'tag')
                     .leftJoinAndSelect('subcategory.category', 'category')
-                    .orderBy('entrepreneurship.created_at','DESC')
                     .offset(skip)
-                    .limit(limit);
+                    .limit(limit)
+                    .orderBy('entrepreneurship.created_at','DESC');
         query.where('actived = true');
         query.andWhere('isVerified = true');
         if(category) query.andWhere('category = :category',{category});
