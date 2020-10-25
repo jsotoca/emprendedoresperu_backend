@@ -22,13 +22,13 @@ export default class CategoryRepository extends Repository<Category> {
 
     async getCategories(getFiltersCategoriesDTO:GetFiltersCategoriesDTO){
         let {page, limit, search} = getFiltersCategoriesDTO;
-        if(!page)page=1;if(!limit)limit=35;
+        // if(!page)page=1;if(!limit)limit=35;
         const skip = (page-1)*limit;
         const query = this.createQueryBuilder('category')
                     .leftJoinAndSelect('category.subcategories', 'subcategory')
                     .orderBy('category.name','ASC')
-                    .offset(skip)
-                    .limit(limit);
+                    // .offset(skip)
+                    // .limit(limit);
         if(search) query.andWhere('name like :search',{search:`%${search}%`});
         const categories = await query.getManyAndCount();
         return {
