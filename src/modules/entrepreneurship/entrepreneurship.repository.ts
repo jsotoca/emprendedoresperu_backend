@@ -64,6 +64,7 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
 
     async getEntrepreneurshipsRecents(){
         const query = this.createQueryBuilder('entrepreneurship')
+                    .leftJoinAndSelect('entrepreneurship.district', 'district')
                     .orderBy('entrepreneurship.created_at','DESC');
                     query.where('actived = true');
                     query.andWhere('isVerified = true');
