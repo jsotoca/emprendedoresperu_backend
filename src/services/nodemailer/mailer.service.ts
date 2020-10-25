@@ -14,8 +14,8 @@ export default class NodemailerService {
     sendMailRegister(user:User){
         const resp = this.mailerService.sendMail({
             to: user.email,
-            from: '"Emprendedores Perú No-Responder" <noresponder@sipandigital.com>',
-            subject: '¡🚀Bienvenido a la comunidad de "Emprendedores Perú" 🚀!',
+            from: '"Publilam No-Responder" <noresponder@publilam.com>',
+            subject: '¡🚀Bienvenido a la comunidad de "Publilam" 🚀!',
             template: 'register',
             context: {
                 user:user.fullname

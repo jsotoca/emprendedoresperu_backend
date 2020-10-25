@@ -11,7 +11,7 @@ export  const MailerProvider =  MailerModule.forRootAsync({
         requireTLS: true,
         secure:true,
         defaults:{
-            from:'"Emprendedores Perú No-Responder" <noresponder@sipandigital.com>'
+            from:'"Publilam No-Responder" <noresponder@publilam.com>'
         },
         template: {
           dir: './templates/email',

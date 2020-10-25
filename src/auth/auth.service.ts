@@ -63,6 +63,8 @@ export class AuthService {
         const id = payload['id'];
         if(user.id !== id) throw new UnauthorizedException('credenciales no validas');
         try {
+            console.log(user);
+            console.log(password);
             user.password = password;
             await user.save();
             return {ok:true,message:'password actualizado'};
