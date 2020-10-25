@@ -40,6 +40,8 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
                     .leftJoinAndSelect('entrepreneurship.tags', 'tag')
                     .leftJoinAndSelect('subcategory.category', 'category')
                     .orderBy('entrepreneurship.created_at','DESC')
+                    .offset(skip)
+                    .limit(limit);
         query.where('actived = true');
         query.andWhere('isVerified = true');
         if(category) query.andWhere('category = :category',{category});
@@ -51,7 +53,6 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
             query.orWhere('category.name like :search and actived = true  and isVerified = true',{search:`%${search}%`});  
             query.orWhere('subcategory.name like :search and actived = true  and isVerified = true',{search:`%${search}%`});  
         }
-        query.offset(skip).limit(limit);
         const entrepreneurships = await query.getManyAndCount();
         return {
             total:entrepreneurships[1],
@@ -63,8 +64,10 @@ export default class EntrepreneurshipRepository extends Repository<Entrepreneurs
 
     async getEntrepreneurshipsRecents(){
         const query = this.createQueryBuilder('entrepreneurship')
-                    .orderBy('entrepreneurship.created_at','DESC')
-                    .limit(10);
+                    .orderBy('entrepreneurship.created_at','DESC');
+                    query.where('actived = true');
+                    query.andWhere('isVerified = true');
+                    query.limit(10);
         const entrepreneurships = await query.getManyAndCount();
         return {
             total:entrepreneurships[1],
